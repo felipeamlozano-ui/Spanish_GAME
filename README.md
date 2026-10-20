@@ -28,28 +28,22 @@ Un juego interactivo web de preguntas y respuestas en español, inspirado en la 
 
 ## 🚀 Publicación en GitHub Pages (Deploy en 1 Minuto)
 
-El proyecto incluye la configuración para GitHub Pages (`.nojekyll` y `.github/workflows/deploy.yml`):
+El repositorio remoto ya está configurado con:
+`https://github.com/felipeamlozano-ui/Spanish_GAME.git`
 
-### Paso 1: Crear el repositorio en GitHub
-1. Ingresa a [github.com/new](https://github.com/new) y crea un nuevo repositorio público (ej. `sabores-hispanos`).
+Tu enlace público de juego en GitHub Pages será:
+🌐 **https://felipeamlozano-ui.github.io/Spanish_GAME/**
 
-### Paso 2: Conectar y subir tu código
-En tu terminal, dentro de esta carpeta, ejecuta:
-```bash
-git remote add origin https://github.com/TU-USUARIO/NOMBRE-DEL-REPOSITORIO.git
-git push -u origin main
-```
-*(Reemplaza `TU-USUARIO` y `NOMBRE-DEL-REPOSITORIO` por los tuyos).*
+---
 
-### Paso 3: Activar GitHub Pages
-1. En GitHub, entra en tu repositorio ➔ **Settings** ➔ sección **Pages** (menú izquierdo).
-2. En **Build and deployment** ➔ **Source**, elige:
-   - **`GitHub Actions`** *(recomendado, usará el workflow listo incluido)* **O**
-   - **`Deploy from a branch`** (rama `main`, carpeta `/ (root)`).
-3. ¡Listo! En instantes tendrás tu enlace en vivo:
-   ```
-   https://TU-USUARIO.github.io/NOMBRE-DEL-REPOSITORIO/
-   ```
+### Cómo Activar GitHub Pages en el repositorio:
+1. En tu repositorio en GitHub ([https://github.com/felipeamlozano-ui/Spanish_GAME](https://github.com/felipeamlozano-ui/Spanish_GAME)), ve a la pestaña **Settings** (Configuración).
+2. En el menú lateral izquierdo, haz clic en **Pages**.
+3. En la sección **Build and deployment** ➔ **Source**, elige:
+   - **`GitHub Actions`** (Recomendado: se desplegará automáticamente usando el workflow incluido en `.github/workflows/deploy.yml`) **O**
+   - **`Deploy from a branch`** (selecciona rama `main` y carpeta `/ (root)`).
+4. En unos momentos tu juego estará activo en:
+   **https://felipeamlozano-ui.github.io/Spanish_GAME/**
 
 ---
 
