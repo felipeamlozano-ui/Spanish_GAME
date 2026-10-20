@@ -37,13 +37,12 @@ Tu enlace público de juego en GitHub Pages será:
 ---
 
 ### Cómo Activar GitHub Pages en el repositorio:
-1. En tu repositorio en GitHub ([https://github.com/felipeamlozano-ui/Spanish_GAME](https://github.com/felipeamlozano-ui/Spanish_GAME)), ve a la pestaña **Settings** (Configuración).
-2. En el menú lateral izquierdo, haz clic en **Pages**.
-3. En la sección **Build and deployment** ➔ **Source**, elige:
-   - **`GitHub Actions`** (Recomendado: se desplegará automáticamente usando el workflow incluido en `.github/workflows/deploy.yml`) **O**
-   - **`Deploy from a branch`** (selecciona rama `main` y carpeta `/ (root)`).
-4. En unos momentos tu juego estará activo en:
-   **https://felipeamlozano-ui.github.io/Spanish_GAME/**
+1. En tu repositorio en GitHub ([https://github.com/felipeamlozano-ui/Spanish_GAME/settings/pages](https://github.com/felipeamlozano-ui/Spanish_GAME/settings/pages)), ve a **Settings** ➔ **Pages**.
+2. En la sección **Build and deployment** ➔ **Source**, selecciona:
+   **`Deploy from a branch`**.
+3. En **Branch**, selecciona **`main`** y la carpeta **`/ (root)`**, luego haz clic en el botón **Save**.
+4. ¡Listo! En 30 a 60 segundos tu juego estará activo en:
+   🌐 **https://felipeamlozano-ui.github.io/Spanish_GAME/**
 
 ---
 
