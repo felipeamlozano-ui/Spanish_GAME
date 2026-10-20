@@ -3,25 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>¡Sabores Hispanos! | El Gran Kahoot de Gastronomía y Cultura</title>
+  <title>¡Sabores Hispanos! | Trivia de Comidas Típicas y Países Hispánicos</title>
   
   <!-- SEO & Social Meta Tags -->
-  <meta name="description" content="Juego interactivo estilo Kahoot sobre comidas típicas y los países hispánicos. ¡Pon a prueba tus conocimientos gastronómicos y compite por el podio!">
+  <meta name="description" content="Juego interactivo de preguntas y respuestas en español sobre comidas típicas y los países hispánicos. Pon a prueba tus conocimientos culturales.">
   <meta name="theme-color" content="#46178f">
   
-  <!-- Google Fonts: Fredoka & Outfit for ultra energetic Kahoot game-show aesthetics -->
+  <!-- Google Fonts: Fredoka & Outfit para diseño dinámico tipo Kahoot -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   
-  <!-- Main Stylesheet -->
+  <!-- Estilos principales -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- Ambient Audio / Canvas Overlay -->
+  <!-- Canvas para partículas de confeti -->
   <canvas id="confetti-canvas"></canvas>
 
-  <!-- Floating Audio Controls Top Right -->
+  <!-- Encabezado Superior -->
   <header class="game-header">
     <div class="brand-mini">
       <span class="brand-shape shape-triangle"></span>
@@ -43,7 +43,7 @@
   <main class="app-viewport">
     
     <!-- ==============================================
-         PANTALLA 1: LOBBY / INICIO
+         PANTALLA 1: LOBBY / INICIO (INDIVIDUAL)
          ============================================== -->
     <section id="screen-lobby" class="game-screen active">
       <div class="lobby-card glass-panel">
@@ -54,24 +54,12 @@
           <span class="title-top">¡SABORES</span>
           <span class="title-bottom">HISPANOS!</span>
         </h1>
-        <p class="game-subtitle">El gran trivial de comidas típicas y países hispanohablantes</p>
+        <p class="game-subtitle">Trivia individual sobre comidas típicas y los países hispanohablantes</p>
 
-        <!-- Player Nickname & Avatar Selection -->
+        <!-- Configuración de la partida individual -->
         <div class="setup-section">
-          <label for="player-nickname" class="section-label">Tu Nombre o Apodo:</label>
-          <div class="input-group">
-            <input 
-              type="text" 
-              id="player-nickname" 
-              maxlength="15" 
-              placeholder="Ej. Chefcito, Valentina..." 
-              autocomplete="off"
-              spellcheck="false"
-              value="Gourmet"
-            />
-          </div>
-
-          <label class="section-label">Elige tu Avatar Culinario:</label>
+          
+          <label class="section-label">Elige tu Emblema Culinario:</label>
           <div class="avatar-selector" id="avatar-selector" role="radiogroup">
             <button type="button" class="avatar-opt selected" data-avatar="🌮" aria-label="Taco">🌮</button>
             <button type="button" class="avatar-opt" data-avatar="🥘" aria-label="Paella">🥘</button>
@@ -83,13 +71,12 @@
             <button type="button" class="avatar-opt" data-avatar="🍮" aria-label="Flan">🍮</button>
           </div>
 
-          <!-- Game Options Selection -->
           <div class="game-options-grid">
             <div class="option-card">
               <span class="option-title">Cantidad de Preguntas</span>
               <div class="segmented-control" id="question-count-selector">
-                <button type="button" class="seg-btn" data-count="10">10</button>
-                <button type="button" class="seg-btn active" data-count="15">15</button>
+                <button type="button" class="seg-btn" data-count="10">10 preguntas</button>
+                <button type="button" class="seg-btn active" data-count="15">15 preguntas</button>
                 <button type="button" class="seg-btn" data-count="25">Todas (25)</button>
               </div>
             </div>
@@ -105,19 +92,19 @@
           </div>
         </div>
 
-        <!-- Action Buttons -->
+        <!-- Botón de Inicio -->
         <div class="lobby-actions">
           <button id="btn-start-game" class="btn-kahoot btn-pulse">
-            <span class="btn-text">¡UNIRSE A LA PARTIDA!</span>
+            <span class="btn-text">¡COMENZAR DESAFÍO!</span>
             <span class="btn-icon">🚀</span>
           </button>
           
           <div class="secondary-actions">
             <button id="btn-how-to-play" class="btn-secondary">
-              📖 ¿Cómo se juega?
+              📖 Instrucciones
             </button>
             <button id="btn-highscores" class="btn-secondary">
-              🏆 Récords Guardados
+              🏆 Tus Récords Anteriores
             </button>
           </div>
         </div>
@@ -126,7 +113,7 @@
     </section>
 
     <!-- ==============================================
-         PANTALLA 2: INTRO PREGUNTA (COUNTDOWN TRANSITION)
+         PANTALLA 2: INTRO PREGUNTA (CUENTA REGRESIVA)
          ============================================== -->
     <section id="screen-intro" class="game-screen">
       <div class="intro-box">
@@ -143,12 +130,12 @@
     </section>
 
     <!-- ==============================================
-         PANTALLA 3: PREGUNTA ACTIVA (KAHOOT PLAY SCREEN)
+         PANTALLA 3: PREGUNTA ACTIVA (ESTILO KAHOOT)
          ============================================== -->
     <section id="screen-question" class="game-screen">
       <div class="quiz-container">
         
-        <!-- Top Status Bar -->
+        <!-- Barra de Estado Superior -->
         <div class="quiz-topbar">
           <div class="status-badge" id="hud-question-index">
             <span class="hud-icon">❓</span>
@@ -171,10 +158,10 @@
           </div>
         </div>
 
-        <!-- Central Question & Timer Area -->
+        <!-- Pregunta y Temporizador -->
         <div class="question-hero-area">
           
-          <!-- Circular Kahoot Timer -->
+          <!-- Cronómetro Circular SVG -->
           <div class="timer-wrapper">
             <svg class="timer-svg" viewBox="0 0 100 100">
               <circle class="timer-track" cx="50" cy="50" r="42" />
@@ -183,46 +170,40 @@
             <div class="timer-number" id="timer-text">20</div>
           </div>
 
-          <!-- Question Content Box -->
+          <!-- Tarjeta de la Pregunta -->
           <div class="question-card glass-panel">
             <div class="dish-badge" id="question-dish-badge">🥘 Comida Tradicional</div>
             <h2 class="question-title" id="question-title-text">
-              ¿Qué ingrediente tradicional da su color amarillo característico a la auténtica Paella Valenciana?
+              Cargando pregunta...
             </h2>
-          </div>
-
-          <!-- Answer Counter Badge -->
-          <div class="answers-indicator" id="answers-indicator">
-            <span class="indicator-icon">👥</span>
-            <span>Respuestas: <strong id="rivals-answered-count">0</strong> / 6</span>
           </div>
         </div>
 
-        <!-- Kahoot 4 Colors/Shapes Answer Grid -->
+        <!-- 4 Opciones de Respuesta al Estilo Kahoot -->
         <div class="answers-grid" id="answers-grid" role="group" aria-label="Opciones de respuesta">
           
-          <!-- Opción 1: Rojo / Triángulo -->
+          <!-- 1: Rojo / Triángulo -->
           <button class="answer-btn btn-red" data-index="0" id="btn-ans-0" tabindex="1">
             <div class="btn-shape-icon shape-triangle"></div>
             <span class="btn-answer-text" id="ans-text-0">Opción 1</span>
             <span class="key-hint">1</span>
           </button>
 
-          <!-- Opción 2: Azul / Rombo -->
+          <!-- 2: Azul / Rombo -->
           <button class="answer-btn btn-blue" data-index="1" id="btn-ans-1" tabindex="2">
             <div class="btn-shape-icon shape-diamond"></div>
             <span class="btn-answer-text" id="ans-text-1">Opción 2</span>
             <span class="key-hint">2</span>
           </button>
 
-          <!-- Opción 3: Amarillo / Círculo -->
+          <!-- 3: Amarillo / Círculo -->
           <button class="answer-btn btn-yellow" data-index="2" id="btn-ans-2" tabindex="3">
             <div class="btn-shape-icon shape-circle"></div>
             <span class="btn-answer-text" id="ans-text-2">Opción 3</span>
             <span class="key-hint">3</span>
           </button>
 
-          <!-- Opción 4: Verde / Cuadrado -->
+          <!-- 4: Verde / Cuadrado -->
           <button class="answer-btn btn-green" data-index="3" id="btn-ans-3" tabindex="4">
             <div class="btn-shape-icon shape-square"></div>
             <span class="btn-answer-text" id="ans-text-3">Opción 4</span>
@@ -235,7 +216,7 @@
     </section>
 
     <!-- ==============================================
-         PANTALLA 4: RESULTADO DE LA PREGUNTA
+         PANTALLA 4: RESULTADO INDIVIDUAL Y CURIOSIDAD CULTURAL
          ============================================== -->
     <section id="screen-result" class="game-screen">
       <div class="result-card glass-panel" id="result-card-inner">
@@ -243,29 +224,29 @@
         <div class="result-status-icon" id="result-status-icon">🎉</div>
         <h2 class="result-status-title" id="result-status-title">¡RESPUESTA CORRECTA!</h2>
         
-        <!-- Points & Streak Feedback -->
+        <!-- Puntos obtenidos -->
         <div class="points-earned-pill" id="points-earned-pill">
           +950 PUNTOS
         </div>
 
         <div class="streak-notification" id="streak-notification">
-          🔥 ¡Racha de 3 respuestas seguidas! (+150 bono)
+          🔥 ¡Racha de 3 aciertos consecutivos! (+150 bono)
         </div>
 
-        <!-- Did You Know / Sabías que... -->
+        <!-- Curiosidad Cultural: ¿Sabías que...? -->
         <div class="trivia-explanation-box">
           <div class="trivia-header">
             <span class="trivia-icon">💡</span>
-            <span class="trivia-label">¿SABÍAS QUE...?</span>
+            <span class="trivia-label">CURIOSIDAD CULTURAL & GASTRONÓMICA</span>
           </div>
           <p class="trivia-text" id="result-explanation-text">
-            El azafrán, conocido como el "oro rojo", no solo le da su color amarillo inconfundible sino también el aroma y sabor tradicional a la paella valenciana.
+            Explicación cultural del plato hispánico...
           </p>
         </div>
 
-        <!-- Next button -->
+        <!-- Botón para avanzar directamente a la siguiente pregunta -->
         <button id="btn-next-step" class="btn-kahoot btn-pulse">
-          <span class="btn-text">VER TABLA DE POSICIONES</span>
+          <span class="btn-text" id="btn-next-text">SIGUIENTE PREGUNTA</span>
           <span class="btn-icon">➔</span>
         </button>
 
@@ -273,118 +254,54 @@
     </section>
 
     <!-- ==============================================
-         PANTALLA 5: MARCADOR / SCOREBOARD EN VIVO
-         ============================================== -->
-    <section id="screen-scoreboard" class="game-screen">
-      <div class="scoreboard-card glass-panel">
-        
-        <div class="scoreboard-header">
-          <span class="scoreboard-badge">CLASIFICACIÓN EN VIVO</span>
-          <h2 class="scoreboard-title">Tabla de Posiciones</h2>
-          <p class="scoreboard-sub">Ronda completada con éxito</p>
-        </div>
-
-        <!-- Animated Leaderboard List -->
-        <div class="leaderboard-list" id="leaderboard-list">
-          <!-- Dynamically populated by game.js -->
-        </div>
-
-        <button id="btn-continue-quiz" class="btn-kahoot btn-pulse">
-          <span class="btn-text" id="btn-continue-text">SIGUIENTE PREGUNTA</span>
-          <span class="btn-icon">➔</span>
-        </button>
-
-      </div>
-    </section>
-
-    <!-- ==============================================
-         PANTALLA 6: GRAN PODIO FINAL (PODIUM CELEBRATION)
+         PANTALLA 5: RESUMEN FINAL INDIVIDUAL (CERTIFICADO DE PUNTUACIÓN)
          ============================================== -->
     <section id="screen-podium" class="game-screen">
-      <div class="podium-card glass-panel">
+      <div class="final-summary-card glass-panel">
         
-        <div class="podium-header">
-          <span class="trophy-bounce">🏆</span>
-          <h1 class="podium-main-title">¡GRAN FINAL!</h1>
-          <p class="podium-sub" id="podium-player-standing">Has alcanzado el puesto #1</p>
+        <div class="summary-hero-icon" id="final-mastery-icon">👨‍🍳👑</div>
+        <h1 class="summary-main-title">¡DESAFÍO COMPLETADO!</h1>
+        <div class="mastery-title-pill" id="final-mastery-title">Gran Maestro de la Cocina Hispana</div>
+        <p class="summary-desc" id="final-mastery-desc">¡Conocimiento gastronómico supremo sobre el mundo hispano!</p>
+
+        <!-- Gran Marcador de Puntos Individual -->
+        <div class="big-score-display">
+          <span class="big-score-label">Puntaje Final Obtenido</span>
+          <span class="big-score-val" id="final-total-score">12,450</span>
+          <span class="big-score-unit">puntos</span>
         </div>
 
-        <!-- 3D Stepped Podium (2nd, 1st, 3rd) -->
-        <div class="podium-stage">
-          
-          <!-- 2º Lugar -->
-          <div class="podium-pillar pillar-2" id="podium-second">
-            <div class="podium-avatar-bubble">
-              <span class="bubble-avatar" id="podium-avatar-2">🇦🇷</span>
-              <span class="bubble-name" id="podium-name-2">Mateo</span>
-              <span class="bubble-score" id="podium-score-2">8,200 pts</span>
-            </div>
-            <div class="podium-block block-silver">
-              <span class="medal-icon">🥈</span>
-              <span class="pillar-number">2</span>
-            </div>
-          </div>
-
-          <!-- 1º Lugar (Campeón) -->
-          <div class="podium-pillar pillar-1" id="podium-first">
-            <div class="crown-badge">👑 CAMPEÓN</div>
-            <div class="podium-avatar-bubble winner-glow">
-              <span class="bubble-avatar" id="podium-avatar-1">🌮</span>
-              <span class="bubble-name" id="podium-name-1">Gourmet</span>
-              <span class="bubble-score" id="podium-score-1">11,450 pts</span>
-            </div>
-            <div class="podium-block block-gold">
-              <span class="medal-icon">🥇</span>
-              <span class="pillar-number">1</span>
-            </div>
-          </div>
-
-          <!-- 3º Lugar -->
-          <div class="podium-pillar pillar-3" id="podium-third">
-            <div class="podium-avatar-bubble">
-              <span class="bubble-avatar" id="podium-avatar-3">🇪🇸</span>
-              <span class="bubble-name" id="podium-name-3">Sofía</span>
-              <span class="bubble-score" id="podium-score-3">7,100 pts</span>
-            </div>
-            <div class="podium-block block-bronze">
-              <span class="medal-icon">🥉</span>
-              <span class="pillar-number">3</span>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Player Final Performance Stats -->
-        <div class="stats-summary-grid">
+        <!-- Estadísticas Personales -->
+        <div class="individual-stats-grid">
           <div class="stat-box">
-            <span class="stat-number" id="final-stat-score">11,450</span>
-            <span class="stat-label">Puntaje Total</span>
+            <span class="stat-number" id="final-stat-correct">14 / 15</span>
+            <span class="stat-label">Aciertos</span>
           </div>
           <div class="stat-box">
             <span class="stat-number" id="final-stat-accuracy">93%</span>
             <span class="stat-label">Precisión</span>
           </div>
           <div class="stat-box">
-            <span class="stat-number" id="final-stat-streak">🔥 5</span>
+            <span class="stat-number" id="final-stat-streak">🔥 6</span>
             <span class="stat-label">Mayor Racha</span>
           </div>
           <div class="stat-box">
-            <span class="stat-number" id="final-stat-rank">#1</span>
-            <span class="stat-label">Posición</span>
+            <span class="stat-number" id="final-stat-speed">2.4s</span>
+            <span class="stat-label">Tiempo Promedio</span>
           </div>
         </div>
 
-        <!-- Podium Actions -->
-        <div class="podium-actions">
+        <!-- Acciones Finales -->
+        <div class="final-actions">
           <button id="btn-play-again" class="btn-kahoot btn-pulse">
             <span class="btn-text">¡JUGAR OTRA VEZ!</span>
             <span class="btn-icon">🔄</span>
           </button>
           <button id="btn-review-answers" class="btn-secondary">
-            📜 Revisar Respuestas y Curiosidades
+            📜 Revisar Preguntas y Curiosidades
           </button>
           <button id="btn-share-score" class="btn-secondary">
-            📤 Compartir Resultado
+            📤 Copiar mi Resultado
           </button>
         </div>
 
@@ -394,39 +311,39 @@
   </main>
 
   <!-- ==============================================
-       MODALES (CÓMO JUGAR, RÉCORDS, REVISIÓN)
+       MODALES (INSTRUCCIONES, RÉCORDS, REVISIÓN)
        ============================================== -->
   
-  <!-- Modal: Cómo Jugar -->
+  <!-- Modal: Instrucciones -->
   <dialog id="modal-how-to-play" class="custom-dialog">
     <div class="dialog-content glass-panel">
       <div class="dialog-header">
-        <h2>📖 ¿Cómo jugar a ¡Sabores Hispanos!?</h2>
+        <h2>📖 ¿Cómo se juega?</h2>
         <button class="dialog-close" data-close-modal="modal-how-to-play" aria-label="Cerrar modal">&times;</button>
       </div>
       <div class="dialog-body">
         <div class="how-step">
           <div class="step-num">1</div>
           <div class="step-text">
-            <strong>Compite en tiempo real:</strong> Cada pregunta tiene 4 opciones de colores y formas al puro estilo Kahoot (Rojo 🔺, Azul 🔷, Amarillo 🟡, Verde 🟩).
+            <strong>Preguntas Culinarias:</strong> Cada pregunta tiene 4 opciones representadas con los colores y formas clásicas de Kahoot (Rojo 🔺, Azul 🔷, Amarillo 🟡, Verde 🟩).
           </div>
         </div>
         <div class="how-step">
           <div class="step-num">2</div>
           <div class="step-text">
-            <strong>La velocidad cuenta:</strong> Entre más rápido contestes correctamente, ¡más puntos obtendrás! (Hasta 1,000 puntos base por pregunta).
+            <strong>Puntos por Velocidad:</strong> Entre más rápido selecciones la respuesta correcta, ¡más puntos acumulas! (Hasta 1,000 puntos base por pregunta).
           </div>
         </div>
         <div class="how-step">
           <div class="step-num">3</div>
           <div class="step-text">
-            <strong>Mantén tu Racha:</strong> Responder preguntas consecutivas sin fallar activa multiplicadores de combo 🔥 para superar a tus rivales.
+            <strong>Bonos de Racha:</strong> Responder de forma consecutiva sin equivocarte activa bonificaciones de racha 🔥.
           </div>
         </div>
         <div class="how-step">
           <div class="step-num">4</div>
           <div class="step-text">
-            <strong>Atajos de teclado:</strong> Puedes usar las teclas <code>1</code>, <code>2</code>, <code>3</code>, <code>4</code> en tu teclado para responder al instante.
+            <strong>Atajos de Teclado:</strong> Puedes presionar las teclas <code>1</code>, <code>2</code>, <code>3</code> o <code>4</code> en tu computadora para responder al instante.
           </div>
         </div>
       </div>
@@ -436,35 +353,35 @@
     </div>
   </dialog>
 
-  <!-- Modal: Récords / Highscores -->
+  <!-- Modal: Récords Personales Anteriores -->
   <dialog id="modal-highscores" class="custom-dialog">
     <div class="dialog-content glass-panel">
       <div class="dialog-header">
-        <h2>🏆 Salón de la Fama Gastronómico</h2>
+        <h2>🏆 Tus Mejores Puntajes Personales</h2>
         <button class="dialog-close" data-close-modal="modal-highscores" aria-label="Cerrar modal">&times;</button>
       </div>
       <div class="dialog-body">
-        <p class="dialog-desc">Tus mejores puntuaciones registradas en este navegador:</p>
+        <p class="dialog-desc">Historial de tus partidas completadas en este navegador:</p>
         <div class="records-table" id="highscores-table-container">
-          <!-- Populated dynamically -->
+          <!-- Se llena dinámicamente -->
         </div>
       </div>
       <div class="dialog-footer">
         <button class="btn-secondary" id="btn-clear-highscores">Borrar Historial</button>
-        <button class="btn-kahoot" data-close-modal="modal-highscores">CerrAR</button>
+        <button class="btn-kahoot" data-close-modal="modal-highscores">CERRAR</button>
       </div>
     </div>
   </dialog>
 
-  <!-- Modal: Revisión de Respuestas -->
+  <!-- Modal: Revisión de Respuestas y Curiosidades -->
   <dialog id="modal-review" class="custom-dialog wide-dialog">
     <div class="dialog-content glass-panel">
       <div class="dialog-header">
-        <h2>📜 Resumen Culinario de la Partida</h2>
+        <h2>📜 Resumen Culinario Completo</h2>
         <button class="dialog-close" data-close-modal="modal-review" aria-label="Cerrar modal">&times;</button>
       </div>
       <div class="dialog-body" id="review-list-container">
-        <!-- Populated dynamically -->
+        <!-- Se llena dinámicamente -->
       </div>
       <div class="dialog-footer">
         <button class="btn-kahoot" data-close-modal="modal-review">CERRAR RESUMEN</button>
@@ -472,7 +389,7 @@
     </div>
   </dialog>
 
-  <!-- Toast Notification System -->
+  <!-- Notificación Toast -->
   <div id="toast" class="toast-notification" role="status" aria-live="polite"></div>
 
   <!-- Scripts -->

@@ -1,16 +1,16 @@
 /* ==========================================================================
-   ¡SABORES HISPANOS! - KAHOOT STYLE STYLESHEET
-   High-energy, modern glassmorphism, responsive design with smooth animations
+   ¡SABORES HISPANOS! - ESTILOS KAHOOT (MODO INDIVIDUAL)
+   Diseño moderno, limpio, responsivo con animaciones fluidas y colores vivos.
    ========================================================================== */
 
 :root {
-  /* Kahoot Canonical Palette */
+  /* Paleta Canónica Kahoot */
   --kahoot-purple-deep: #25074d;
   --kahoot-purple-main: #46178f;
   --kahoot-purple-light: #5d25b3;
   --kahoot-purple-glow: rgba(70, 23, 143, 0.4);
 
-  /* Iconic Kahoot 4 Colors */
+  /* Los 4 colores clásicos de Kahoot */
   --color-red: #e21b3c;
   --color-red-dark: #b8142f;
   --color-blue: #1368ce;
@@ -20,27 +20,27 @@
   --color-green: #26890c;
   --color-green-dark: #1b6807;
 
-  /* Accent & Neutrals */
+  /* Colores de acento y neutros */
   --accent-gold: #ffbe0b;
   --accent-cyan: #00f0ff;
   --bg-glass: rgba(255, 255, 255, 0.12);
   --bg-glass-card: rgba(255, 255, 255, 0.15);
   --bg-glass-border: rgba(255, 255, 255, 0.22);
   --text-white: #ffffff;
-  --text-muted: rgba(255, 255, 255, 0.75);
+  --text-muted: rgba(255, 255, 255, 0.78);
   --text-dark: #1d1d1f;
 
-  /* Typography */
+  /* Tipografía */
   --font-display: 'Fredoka', -apple-system, BlinkMacSystemFont, 'Segoe UI', cursive, sans-serif;
   --font-ui: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
-  /* Transitions */
+  /* Transiciones */
   --trans-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   --trans-bounce: 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
   --trans-smooth: 0.3s ease;
 }
 
-/* CSS Reset & Global Layout */
+/* Reset y diseño global */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -64,7 +64,7 @@ html, body {
   user-select: none;
 }
 
-/* Background Confetti Canvas */
+/* Canvas de Confeti */
 #confetti-canvas {
   position: fixed;
   top: 0;
@@ -75,7 +75,7 @@ html, body {
   z-index: 999;
 }
 
-/* Glassmorphism Reusable Class */
+/* Paneles Glassmorphism */
 .glass-panel {
   background: var(--bg-glass-card);
   backdrop-filter: blur(18px);
@@ -85,7 +85,7 @@ html, body {
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
 }
 
-/* Top App Header */
+/* Barra Superior */
 .game-header {
   position: fixed;
   top: 0;
@@ -174,7 +174,7 @@ html, body {
   transform: scale(1.08);
 }
 
-/* App Viewport Container */
+/* Contenedor Principal */
 .app-viewport {
   width: 100%;
   min-height: 100vh;
@@ -186,11 +186,11 @@ html, body {
   position: relative;
 }
 
-/* Screens Switcher */
+/* Pantallas y Transiciones */
 .game-screen {
   display: none;
   width: 100%;
-  max-width: 1000px;
+  max-width: 950px;
   margin: 0 auto;
   padding: 16px;
   opacity: 0;
@@ -265,33 +265,13 @@ html, body {
 
 .section-label {
   display: block;
-  font-size: 0.95rem;
-  font-weight: 600;
+  font-size: 0.92rem;
+  font-weight: 700;
   color: #ffde59;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-bottom: 8px;
-}
-
-.input-group input {
-  width: 100%;
-  padding: 14px 18px;
-  font-family: var(--font-ui);
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #fff;
-  background: rgba(0, 0, 0, 0.3);
-  border: 2px solid rgba(255, 255, 255, 0.25);
-  border-radius: 14px;
-  outline: none;
-  transition: var(--trans-fast);
-  margin-bottom: 18px;
-}
-
-.input-group input:focus {
-  border-color: #ffde59;
-  box-shadow: 0 0 16px rgba(255, 222, 89, 0.4);
-  background: rgba(0, 0, 0, 0.45);
+  margin-bottom: 10px;
+  text-align: center;
 }
 
 .avatar-selector {
@@ -363,7 +343,7 @@ html, body {
   color: #fff;
   font-family: var(--font-ui);
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   padding: 7px 4px;
   border-radius: 8px;
   cursor: pointer;
@@ -451,7 +431,7 @@ html, body {
 }
 
 /* ==========================================================================
-   PANTALLA 2: INTRO PREGUNTA TRANSITION
+   PANTALLA 2: INTRO PREGUNTA
    ========================================================================== */
 #screen-intro {
   text-align: center;
@@ -522,7 +502,7 @@ html, body {
 }
 
 /* ==========================================================================
-   PANTALLA 3: PREGUNTA ACTIVA (KAHOOT PLAY SCREEN)
+   PANTALLA 3: PREGUNTA ACTIVA
    ========================================================================== */
 .quiz-container {
   display: flex;
@@ -531,7 +511,6 @@ html, body {
   width: 100%;
 }
 
-/* HUD Topbar */
 .quiz-topbar {
   display: flex;
   align-items: center;
@@ -579,7 +558,6 @@ html, body {
   border: 1px solid rgba(56, 189, 248, 0.4);
 }
 
-/* Question Area + Timer */
 .question-hero-area {
   display: flex;
   align-items: center;
@@ -587,7 +565,7 @@ html, body {
   position: relative;
 }
 
-/* Circular Timer */
+/* Cronómetro Circular */
 .timer-wrapper {
   position: relative;
   width: 90px;
@@ -647,7 +625,6 @@ html, body {
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* Question Main Box */
 .question-card {
   flex: 1;
   padding: 22px 28px;
@@ -680,24 +657,7 @@ html, body {
   color: #fff;
 }
 
-.answers-indicator {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 16px;
-  padding: 10px 16px;
-  font-size: 0.85rem;
-  white-space: nowrap;
-}
-
-.indicator-icon {
-  font-size: 1.4rem;
-}
-
-/* Kahoot 4 Colors Answers Grid */
+/* 4 Opciones de Respuesta al Estilo Kahoot */
 .answers-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -741,7 +701,6 @@ html, body {
   cursor: default;
 }
 
-/* Buttons color themes */
 .btn-red {
   background: linear-gradient(180deg, var(--color-red) 0%, var(--color-red-dark) 100%);
   border-bottom: 6px solid #8e0e22;
@@ -766,7 +725,6 @@ html, body {
   box-shadow: 0 8px 20px rgba(38, 137, 12, 0.4);
 }
 
-/* Shapes inside buttons */
 .btn-shape-icon {
   flex-shrink: 0;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
@@ -820,7 +778,6 @@ html, body {
   color: rgba(255, 255, 255, 0.7);
 }
 
-/* State changes after answer */
 .answer-btn.is-correct {
   transform: scale(1.02);
   filter: brightness(1.2) drop-shadow(0 0 16px rgba(255, 255, 255, 0.8));
@@ -840,7 +797,7 @@ html, body {
 }
 
 /* ==========================================================================
-   PANTALLA 4: RESULTADO DE LA PREGUNTA
+   PANTALLA 4: RESULTADO INDIVIDUAL Y CURIOSIDAD
    ========================================================================== */
 .result-card {
   max-width: 650px;
@@ -932,275 +889,108 @@ html, body {
 }
 
 /* ==========================================================================
-   PANTALLA 5: SCOREBOARD / CLASIFICACIÓN
+   PANTALLA 5: RESUMEN FINAL INDIVIDUAL (CERTIFICADO)
    ========================================================================== */
-.scoreboard-card {
-  max-width: 680px;
+.final-summary-card {
+  max-width: 720px;
   margin: 10px auto;
-  padding: 30px;
+  padding: 40px 32px;
   text-align: center;
+  position: relative;
 }
 
-.scoreboard-badge {
-  font-size: 0.82rem;
-  font-weight: 800;
-  color: #ffde59;
-  letter-spacing: 1px;
-  background: rgba(255, 222, 89, 0.2);
-  padding: 4px 14px;
-  border-radius: 20px;
-}
-
-.scoreboard-title {
-  font-family: var(--font-display);
-  font-size: 2.3rem;
-  font-weight: 700;
-  margin: 6px 0 2px 0;
-}
-
-.scoreboard-sub {
-  color: var(--text-muted);
-  font-size: 0.95rem;
-  margin-bottom: 20px;
-}
-
-.leaderboard-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 24px;
-}
-
-.leaderboard-row {
-  display: flex;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 16px;
-  padding: 12px 18px;
-  gap: 14px;
-  transition: transform 0.4s ease, background 0.3s ease;
-}
-
-.leaderboard-row.player-row {
-  background: linear-gradient(90deg, rgba(56, 189, 248, 0.25) 0%, rgba(16, 185, 129, 0.25) 100%);
-  border: 2px solid #38bdf8;
-  box-shadow: 0 4px 16px rgba(56, 189, 248, 0.3);
-}
-
-.row-rank {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 700;
-  width: 32px;
-  text-align: center;
-}
-
-.row-avatar {
-  font-size: 1.8rem;
-}
-
-.row-info {
-  flex: 1;
-  text-align: left;
-}
-
-.row-name {
-  font-size: 1.15rem;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.row-tag {
-  font-size: 0.72rem;
-  font-weight: 800;
-  background: #ffde59;
-  color: #1a0a33;
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-
-.row-streak {
-  font-size: 0.8rem;
-  color: #ff9100;
-  font-weight: 600;
-}
-
-.row-score {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #fff;
-}
-
-/* ==========================================================================
-   PANTALLA 6: GRAN PODIO FINAL (PODIUM CELEBRATION)
-   ========================================================================== */
-.podium-card {
-  max-width: 780px;
-  margin: 10px auto;
-  padding: 36px 30px;
-  text-align: center;
-}
-
-.trophy-bounce {
-  font-size: 3.8rem;
+.summary-hero-icon {
+  font-size: 4.5rem;
   display: inline-block;
-  animation: trophySpin 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: heroIconFloat 2.5s infinite alternate ease-in-out;
+  margin-bottom: 8px;
 }
 
-@keyframes trophySpin {
-  0% { transform: scale(0) rotate(-180deg); }
-  70% { transform: scale(1.2) rotate(10deg); }
-  100% { transform: scale(1) rotate(0deg); }
+@keyframes heroIconFloat {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-8px) scale(1.08); }
 }
 
-.podium-main-title {
+.summary-main-title {
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-size: clamp(2.3rem, 5vw, 3.4rem);
   font-weight: 700;
   color: #fff;
   text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  margin-bottom: 10px;
 }
 
-.podium-sub {
-  font-size: 1.15rem;
-  color: #ffde59;
-  font-weight: 600;
-  margin-bottom: 28px;
-}
-
-/* 3D Stepped Podium Stage */
-.podium-stage {
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 16px;
-  height: 280px;
-  margin-bottom: 30px;
-  padding: 0 10px;
-}
-
-.podium-pillar {
-  flex: 1;
-  max-width: 190px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-}
-
-.podium-avatar-bubble {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 12px;
-  gap: 4px;
-}
-
-.bubble-avatar {
-  font-size: 2.8rem;
-  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
-}
-
-.bubble-name {
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: #fff;
-}
-
-.bubble-score {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-muted);
-}
-
-.winner-glow {
-  transform: scale(1.1);
-}
-
-.winner-glow .bubble-avatar {
-  font-size: 3.4rem;
-  animation: floatWinner 2s infinite alternate ease-in-out;
-}
-
-@keyframes floatWinner {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-8px); }
-}
-
-.crown-badge {
+.mastery-title-pill {
+  display: inline-block;
   font-family: var(--font-display);
-  font-size: 0.85rem;
+  font-size: 1.35rem;
   font-weight: 700;
-  background: #ffbe0b;
+  background: linear-gradient(135deg, #ffbe0b 0%, #ff5400 100%);
   color: #1a0a33;
-  padding: 4px 12px;
+  padding: 8px 24px;
+  border-radius: 30px;
+  box-shadow: 0 4px 15px rgba(255, 190, 11, 0.4);
+  margin-bottom: 8px;
+}
+
+.summary-desc {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  max-width: 540px;
+  margin: 0 auto 28px auto;
+  line-height: 1.45;
+}
+
+/* Marcador Gigante Individual */
+.big-score-display {
+  background: rgba(0, 0, 0, 0.35);
+  border: 2px solid rgba(255, 222, 89, 0.4);
   border-radius: 20px;
-  box-shadow: 0 4px 10px rgba(255, 190, 11, 0.4);
+  padding: 20px;
+  max-width: 440px;
+  margin: 0 auto 28px auto;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.big-score-label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #ffde59;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   margin-bottom: 4px;
 }
 
-.podium-block {
-  width: 100%;
-  border-radius: 16px 16px 0 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  position: relative;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-}
-
-.pillar-number {
+.big-score-val {
+  display: block;
   font-family: var(--font-display);
-  font-size: 2.5rem;
+  font-size: clamp(2.8rem, 6vw, 3.8rem);
   font-weight: 800;
-  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+  color: #ffffff;
+  text-shadow: 0 4px 16px rgba(255, 222, 89, 0.5);
+  line-height: 1;
 }
 
-.medal-icon {
-  font-size: 1.8rem;
-  margin-bottom: -4px;
+.big-score-unit {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 600;
 }
 
-/* Pillar 1: Gold */
-.pillar-1 .podium-block {
-  height: 180px;
-  background: linear-gradient(180deg, #ffbe0b 0%, #d48b00 100%);
-  border-top: 4px solid #fff3c4;
-}
-
-/* Pillar 2: Silver */
-.pillar-2 .podium-block {
-  height: 135px;
-  background: linear-gradient(180deg, #94a3b8 0%, #64748b 100%);
-  border-top: 4px solid #f1f5f9;
-}
-
-/* Pillar 3: Bronze */
-.pillar-3 .podium-block {
-  height: 100px;
-  background: linear-gradient(180deg, #cd7f32 0%, #995c1c 100%);
-  border-top: 4px solid #fed7aa;
-}
-
-/* Stats Summary Grid */
-.stats-summary-grid {
+/* Grilla de 4 Estadísticas Personales */
+.individual-stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
-  margin-bottom: 26px;
+  margin-bottom: 30px;
 }
 
 .stat-box {
   background: rgba(0, 0, 0, 0.25);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 14px;
-  padding: 12px 8px;
+  padding: 14px 8px;
 }
 
 .stat-number {
@@ -1219,10 +1009,10 @@ html, body {
   letter-spacing: 0.5px;
 }
 
-.podium-actions {
+.final-actions {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 /* ==========================================================================
@@ -1341,7 +1131,6 @@ html, body {
   font-size: 0.8rem;
 }
 
-/* Review List Container */
 .review-item {
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -1378,7 +1167,7 @@ html, body {
   margin-top: 6px;
 }
 
-/* Toast Notifications */
+/* Notificación Toast */
 .toast-notification {
   position: fixed;
   bottom: 24px;
@@ -1401,7 +1190,7 @@ html, body {
 }
 
 /* ==========================================================================
-   RESPONSIVE DESIGN (TABLETS & MOBILE SMARTPHONES)
+   RESPONSIVIDAD (MÓVILES Y PANTALLAS PEQUEÑAS)
    ========================================================================== */
 @media (max-width: 768px) {
   .game-header {
@@ -1440,10 +1229,6 @@ html, body {
     align-self: center;
   }
 
-  .answers-indicator {
-    display: none;
-  }
-
   .answers-grid {
     grid-template-columns: 1fr;
     gap: 12px;
@@ -1455,19 +1240,7 @@ html, body {
     gap: 14px;
   }
 
-  .podium-stage {
-    height: 230px;
-    gap: 8px;
-  }
-
-  .stats-summary-grid {
+  .individual-stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-
-  .pillar-1 .podium-block { height: 140px; }
-  .pillar-2 .podium-block { height: 105px; }
-  .pillar-3 .podium-block { height: 75px; }
-
-  .bubble-avatar { font-size: 2.2rem; }
-  .winner-glow .bubble-avatar { font-size: 2.6rem; }
 }

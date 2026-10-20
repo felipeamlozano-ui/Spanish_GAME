@@ -1,25 +1,29 @@
 /**
- * ¡SABORES HISPANOS! - MOTOR PRINCIPAL DEL JUEGO (GAME ENGINE)
- * Lógica estilo Kahoot: Cronómetro SVG, puntuación por velocidad, rachas,
- * competidores simulados en vivo, podio 3D y resumen interactivo.
+ * ¡SABORES HISPANOS! - MOTOR PRINCIPAL DEL JUEGO (MODO 100% INDIVIDUAL)
+ * Experiencia solista de trivia gastronómica:
+ * - Preguntas culturales sobre comidas típicas y países hispanohablantes.
+ * - Cronómetro SVG y puntos basados en velocidad + racha personal.
+ * - Sin bots ni marcadores artificiales: desafío 100% enfocado en el jugador.
+ * - Curiosidades históricas ("¿Sabías que...?") en cada respuesta.
+ * - Título honorífico y certificado final de maestría culinaria.
  */
 
 class SaboresGame {
   constructor() {
-    // Configuración del jugador
-    this.playerName = 'Gourmet';
+    // Configuración individual
     this.playerAvatar = '🌮';
     this.questionCount = 15;
     this.timeLimit = 20;
 
-    // Estado de la partida
+    // Estado de la partida actual
     this.questions = [];
     this.currentIndex = 0;
     this.score = 0;
     this.streak = 0;
     this.maxStreak = 0;
     this.correctCount = 0;
-    this.userHistory = []; // Registro para la revisión final
+    this.totalTimeSpent = 0;
+    this.userHistory = []; // Registro de preguntas para revisión final
 
     // Cronómetro
     this.timerInterval = null;
@@ -27,35 +31,23 @@ class SaboresGame {
     this.hasAnswered = false;
     this.questionStartTime = 0;
 
-    // Rivales estilo Kahoot (Bots animados)
-    this.rivals = [
-      { id: 'rival-1', name: 'Sofía', avatar: '🇪🇸', score: 0, streak: 0, accuracy: 0.85 },
-      { id: 'rival-2', name: 'Mateo', avatar: '🇦🇷', score: 0, streak: 0, accuracy: 0.80 },
-      { id: 'rival-3', name: 'Valentina', avatar: '🇨🇴', score: 0, streak: 0, accuracy: 0.75 },
-      { id: 'rival-4', name: 'Lucas', avatar: '🇲🇽', score: 0, streak: 0, accuracy: 0.70 },
-      { id: 'rival-5', name: 'Camila', avatar: '🇨🇱', score: 0, streak: 0, accuracy: 0.65 }
-    ];
-
     this.initDOM();
     this.initEvents();
     this.loadSavedPreferences();
   }
 
   /* ========================================================================
-     INICIALIZACIÓN Y CACHÉ DEL DOM
+     INICIALIZACIÓN DEL DOM
      ======================================================================== */
   initDOM() {
-    // Pantallas
     this.screens = {
       lobby: document.getElementById('screen-lobby'),
       intro: document.getElementById('screen-intro'),
       question: document.getElementById('screen-question'),
       result: document.getElementById('screen-result'),
-      scoreboard: document.getElementById('screen-scoreboard'),
       podium: document.getElementById('screen-podium')
     };
 
-    // Botones de respuesta
     this.answerButtons = [
       document.getElementById('btn-ans-0'),
       document.getElementById('btn-ans-1'),
@@ -63,7 +55,7 @@ class SaboresGame {
       document.getElementById('btn-ans-3')
     ];
 
-    // Elementos del HUD
+    // HUD Superior
     this.hudQuestionText = document.getElementById('hud-q-text');
     this.hudCountryFlag = document.getElementById('hud-flag');
     this.hudCountryName = document.getElementById('hud-country');
@@ -75,13 +67,15 @@ class SaboresGame {
     this.timerCircle = document.getElementById('timer-circle');
     this.timerText = document.getElementById('timer-text');
 
-    // Pantalla de Resultado
+    // Pantalla de Resultado Individual
     this.resultCard = document.getElementById('result-card-inner');
     this.resultIcon = document.getElementById('result-status-icon');
     this.resultTitle = document.getElementById('result-status-title');
     this.resultPoints = document.getElementById('points-earned-pill');
     this.resultStreak = document.getElementById('streak-notification');
     this.resultTrivia = document.getElementById('result-explanation-text');
+    this.btnNextStep = document.getElementById('btn-next-step');
+    this.btnNextText = document.getElementById('btn-next-text');
 
     // Modales
     this.modalHowToPlay = document.getElementById('modal-how-to-play');
@@ -94,7 +88,7 @@ class SaboresGame {
      EVENT LISTENERS
      ======================================================================== */
   initEvents() {
-    // Selección de Avatar
+    // Selección de Avatar / Emblema
     const avatarBtns = document.querySelectorAll('.avatar-opt');
     avatarBtns.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -105,7 +99,7 @@ class SaboresGame {
       });
     });
 
-    // Segmented Controls (Cantidad de preguntas)
+    // Selector de cantidad de preguntas
     const countBtns = document.querySelectorAll('#question-count-selector .seg-btn');
     countBtns.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -116,7 +110,7 @@ class SaboresGame {
       });
     });
 
-    // Segmented Controls (Tiempo por pregunta)
+    // Selector de tiempo por pregunta
     const timeBtns = document.querySelectorAll('#time-limit-selector .seg-btn');
     timeBtns.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -127,18 +121,18 @@ class SaboresGame {
       });
     });
 
-    // Iniciar Juego
+    // Iniciar Juego Individual
     document.getElementById('btn-start-game').addEventListener('click', () => {
       sounds.playPop();
       this.startGame();
     });
 
-    // Botones de Respuesta
+    // Opciones de respuesta
     this.answerButtons.forEach((btn, index) => {
       btn.addEventListener('click', () => this.handleAnswerSelect(index));
     });
 
-    // Atajos de Teclado (1, 2, 3, 4)
+    // Atajos de teclado (1, 2, 3, 4)
     window.addEventListener('keydown', (e) => {
       if (this.screens.question.classList.contains('active') && !this.hasAnswered) {
         if (e.key === '1') this.handleAnswerSelect(0);
@@ -148,18 +142,13 @@ class SaboresGame {
       }
     });
 
-    // Navegación entre rondas
-    document.getElementById('btn-next-step').addEventListener('click', () => {
+    // Botón de paso a la siguiente pregunta (Flujo directo sin leaderboard)
+    this.btnNextStep.addEventListener('click', () => {
       sounds.playWhoosh();
-      this.showScoreboard();
+      this.advanceToNextOrFinish();
     });
 
-    document.getElementById('btn-continue-quiz').addEventListener('click', () => {
-      sounds.playWhoosh();
-      this.nextRoundOrFinish();
-    });
-
-    // Acciones del Podio
+    // Acciones del resumen final
     document.getElementById('btn-play-again').addEventListener('click', () => {
       sounds.playPop();
       this.returnToLobby();
@@ -191,7 +180,7 @@ class SaboresGame {
       }
     });
 
-    // Modales (Abrir y Cerrar)
+    // Modales
     document.getElementById('btn-how-to-play').addEventListener('click', () => {
       sounds.playPop();
       this.modalHowToPlay.showModal();
@@ -205,13 +194,13 @@ class SaboresGame {
 
     document.getElementById('btn-clear-highscores').addEventListener('click', () => {
       sounds.playPop();
-      localStorage.removeItem('sabores_highscores');
+      localStorage.removeItem('sabores_individual_records');
       this.renderHighscores();
-      this.showToast('Historial de récords borrado');
+      this.showToast('Historial personal borrado');
     });
 
     document.querySelectorAll('[data-close-modal]').forEach(btn => {
-      btn.addEventListener('click', (e) => {
+      btn.addEventListener('click', () => {
         sounds.playPop();
         const dialog = document.getElementById(btn.dataset.closeModal);
         if (dialog) dialog.close();
@@ -237,34 +226,25 @@ class SaboresGame {
   }
 
   /* ========================================================================
-     LÓGICA DEL JUEGO
+     FLUJO PRINCIPAL DEL JUEGO
      ======================================================================== */
   startGame() {
-    const nickInput = document.getElementById('player-nickname').value.trim();
-    this.playerName = nickInput || 'Gourmet';
-
-    // Barajar y seleccionar preguntas
+    // Barajar y tomar la cantidad elegida
     const shuffled = shuffleArray(QUIZ_QUESTIONS);
     this.questions = shuffled.slice(0, Math.min(this.questionCount, QUIZ_QUESTIONS.length));
-    
-    // Reiniciar contadores del jugador
+
+    // Reiniciar contadores individuales
     this.currentIndex = 0;
     this.score = 0;
     this.streak = 0;
     this.maxStreak = 0;
     this.correctCount = 0;
+    this.totalTimeSpent = 0;
     this.userHistory = [];
-
-    // Reiniciar rivales con puntajes en 0
-    this.rivals.forEach(rival => {
-      rival.score = 0;
-      rival.streak = 0;
-    });
 
     this.startIntroCountdown();
   }
 
-  // Cuenta regresiva estilo Kahoot antes de cada pregunta
   startIntroCountdown() {
     this.switchScreen('intro');
     const currentQ = this.questions[this.currentIndex];
@@ -288,10 +268,9 @@ class SaboresGame {
         clearInterval(countdownTimer);
         this.renderQuestion();
       }
-    }, 950);
+    }, 900);
   }
 
-  // Renderizar y comenzar la pregunta activa
   renderQuestion() {
     this.switchScreen('question');
     const currentQ = this.questions[this.currentIndex];
@@ -300,37 +279,35 @@ class SaboresGame {
     this.questionStartTime = Date.now();
     this.timeLeft = this.timeLimit;
 
-    // Actualizar HUD
+    // Actualizar HUD individual
     this.hudQuestionText.textContent = `${this.currentIndex + 1} / ${this.questions.length}`;
     this.hudCountryFlag.textContent = currentQ.flag;
     this.hudCountryName.textContent = currentQ.country;
     this.hudStreakCount.textContent = `Racha ${this.streak}`;
     this.hudScore.textContent = `${this.score.toLocaleString()} pts`;
 
-    // Actualizar pregunta
+    // Pregunta y opciones
     document.getElementById('question-dish-badge').textContent = `${currentQ.flag} ${currentQ.dish}`;
     document.getElementById('question-title-text').textContent = currentQ.question;
 
-    // Preparar botones de respuesta
     this.answerButtons.forEach((btn, index) => {
       btn.disabled = false;
       btn.className = `answer-btn btn-${['red', 'blue', 'yellow', 'green'][index]}`;
       document.getElementById(`ans-text-${index}`).textContent = currentQ.options[index];
     });
 
-    // Iniciar el cronómetro circular
     this.startTimer();
   }
 
   startTimer() {
     if (this.timerInterval) clearInterval(this.timerInterval);
 
-    const fullCircumference = 264; // r=42 -> 2 * PI * 42 ≈ 263.89
+    const fullCircumference = 264;
     this.timerCircle.style.strokeDashoffset = '0';
     this.timerCircle.className = 'timer-progress';
     this.timerText.textContent = this.timeLeft;
 
-    const intervalStep = 100; // ms
+    const intervalStep = 100;
     const totalDuration = this.timeLimit * 1000;
     let elapsed = 0;
 
@@ -340,12 +317,10 @@ class SaboresGame {
       this.timeLeft = remainingSeconds;
       this.timerText.textContent = remainingSeconds;
 
-      // Actualizar offset del SVG
       const fraction = elapsed / totalDuration;
       const offset = fraction * fullCircumference;
       this.timerCircle.style.strokeDashoffset = offset;
 
-      // Colores de alerta del cronómetro y tics sonoros
       if (remainingSeconds <= 5) {
         this.timerCircle.classList.add('timer-danger');
         if (elapsed % 1000 < intervalStep) sounds.playTick(true);
@@ -354,7 +329,6 @@ class SaboresGame {
         if (elapsed % 1000 < intervalStep) sounds.playTick(false);
       }
 
-      // Tiempo agotado
       if (elapsed >= totalDuration) {
         clearInterval(this.timerInterval);
         this.handleTimeout();
@@ -363,7 +337,7 @@ class SaboresGame {
   }
 
   /* ========================================================================
-     MANEJO DE RESPUESTAS Y PUNTUACIÓN KAHOOT
+     RESPUESTAS Y PUNTUACIÓN INDIVIDUAL
      ======================================================================== */
   handleAnswerSelect(selectedIndex) {
     if (this.hasAnswered) return;
@@ -373,8 +347,9 @@ class SaboresGame {
     const currentQ = this.questions[this.currentIndex];
     const isCorrect = selectedIndex === currentQ.correct;
     const timeSpent = (Date.now() - this.questionStartTime) / 1000;
+    this.totalTimeSpent += timeSpent;
 
-    // Deshabilitar botones y resaltar respuestas
+    // Resaltar opciones
     this.answerButtons.forEach((btn, idx) => {
       btn.disabled = true;
       if (idx === currentQ.correct) {
@@ -395,12 +370,10 @@ class SaboresGame {
       this.streak++;
       if (this.streak > this.maxStreak) this.maxStreak = this.streak;
 
-      // Fórmula oficial de Kahoot:
-      // Puntaje base por velocidad (de 500 a 1000 puntos)
+      // Puntos de velocidad: hasta 1,000 pts base
       const speedRatio = Math.max(0, (this.timeLimit - timeSpent) / this.timeLimit);
       const basePoints = Math.round((0.5 + (speedRatio * 0.5)) * 1000);
 
-      // Bono por racha consecutiva
       if (this.streak >= 2) {
         streakBonus = Math.min((this.streak - 1) * 100, 400);
       }
@@ -409,13 +382,13 @@ class SaboresGame {
       this.score += pointsAwarded;
 
       sounds.playCorrect();
-      confetti.burst(window.innerWidth / 2, window.innerHeight * 0.4, 50);
+      confetti.burst(window.innerWidth / 2, window.innerHeight * 0.4, 45);
     } else {
       this.streak = 0;
       sounds.playWrong();
     }
 
-    // Registrar en el historial para revisión final
+    // Registrar para la revisión posterior
     this.userHistory.push({
       question: currentQ.question,
       dish: currentQ.dish,
@@ -424,16 +397,14 @@ class SaboresGame {
       userChoice: currentQ.options[selectedIndex],
       correctChoice: currentQ.options[currentQ.correct],
       isCorrect: isCorrect,
-      trivia: currentQ.trivia
+      trivia: currentQ.trivia,
+      timeSpent: timeSpent.toFixed(1)
     });
 
-    // Simular respuestas de los rivales
-    this.simulateRivals(isCorrect);
-
-    // Pausa dramática estilo Kahoot antes de mostrar la pantalla de resultado
+    // Transición directa al resultado cultural
     setTimeout(() => {
       this.showResultScreen(isCorrect, pointsAwarded, streakBonus, false);
-    }, 1200);
+    }, 1100);
   }
 
   handleTimeout() {
@@ -442,8 +413,8 @@ class SaboresGame {
 
     const currentQ = this.questions[this.currentIndex];
     this.streak = 0;
+    this.totalTimeSpent += this.timeLimit;
 
-    // Resaltar la respuesta que era correcta
     this.answerButtons.forEach((btn, idx) => {
       btn.disabled = true;
       if (idx === currentQ.correct) {
@@ -461,35 +432,19 @@ class SaboresGame {
       userChoice: 'Tiempo Agotado',
       correctChoice: currentQ.options[currentQ.correct],
       isCorrect: false,
-      trivia: currentQ.trivia
+      trivia: currentQ.trivia,
+      timeSpent: `${this.timeLimit}.0`
     });
 
     sounds.playWrong();
-    this.simulateRivals(false);
 
     setTimeout(() => {
       this.showResultScreen(false, 0, 0, true);
-    }, 1200);
-  }
-
-  // Simulación dinámica y realista de los rivales bot
-  simulateRivals(playerAnsweredCorrect) {
-    this.rivals.forEach(rival => {
-      const willAnswerCorrect = Math.random() < rival.accuracy;
-      if (willAnswerCorrect) {
-        rival.streak++;
-        const simulatedSpeed = Math.random() * 0.7 + 0.3; // ratio
-        const base = Math.round((0.5 + (simulatedSpeed * 0.5)) * 950);
-        const streakBonus = Math.min((rival.streak - 1) * 80, 300);
-        rival.score += (base + streakBonus);
-      } else {
-        rival.streak = 0;
-      }
-    });
+    }, 1100);
   }
 
   /* ========================================================================
-     PANTALLAS DE RESULTADO Y MARCADOR
+     PANTALLA DE RESULTADO INDIVIDUAL Y CURIOSIDAD
      ======================================================================== */
   showResultScreen(isCorrect, points, streakBonus, isTimeout) {
     this.switchScreen('result');
@@ -507,7 +462,7 @@ class SaboresGame {
 
       if (this.streak >= 2) {
         this.resultStreak.style.display = 'block';
-        this.resultStreak.textContent = `🔥 ¡Racha de ${this.streak} seguidas! (+${streakBonus} bono)`;
+        this.resultStreak.textContent = `🔥 ¡Racha de ${this.streak} respuestas correctas! (+${streakBonus} bono)`;
       } else {
         this.resultStreak.style.display = 'none';
       }
@@ -521,169 +476,118 @@ class SaboresGame {
     } else {
       this.resultCard.classList.add('state-wrong');
       this.resultIcon.textContent = '❌';
-      this.resultTitle.textContent = '¡CASI! INCORRECTO';
+      this.resultTitle.textContent = '¡RESPUESTA INCORRECTA!';
       this.resultTitle.style.color = '#ef4444';
       this.resultPoints.style.display = 'none';
       this.resultStreak.style.display = 'none';
     }
 
     this.resultTrivia.textContent = currentQ.trivia;
+
+    // Si es la última pregunta, actualizar el texto del botón
+    const isLast = this.currentIndex >= this.questions.length - 1;
+    this.btnNextText.textContent = isLast ? 'VER MI RESULTADO FINAL' : 'SIGUIENTE PREGUNTA';
   }
 
-  showScoreboard() {
-    this.switchScreen('scoreboard');
-
-    // Combinar jugador y rivales en una sola lista para ordenar
-    const allPlayers = [
-      {
-        name: this.playerName,
-        avatar: this.playerAvatar,
-        score: this.score,
-        streak: this.streak,
-        isPlayer: true
-      },
-      ...this.rivals.map(r => ({
-        name: r.name,
-        avatar: r.avatar,
-        score: r.score,
-        streak: r.streak,
-        isPlayer: false
-      }))
-    ];
-
-    allPlayers.sort((a, b) => b.score - a.score);
-
-    const listContainer = document.getElementById('leaderboard-list');
-    listContainer.innerHTML = '';
-
-    allPlayers.slice(0, 5).forEach((item, index) => {
-      const row = document.createElement('div');
-      row.className = `leaderboard-row ${item.isPlayer ? 'player-row' : ''}`;
-      
-      const medals = ['🥇', '🥈', '🥉', '4º', '5º'];
-
-      row.innerHTML = `
-        <div class="row-rank">${medals[index]}</div>
-        <div class="row-avatar">${item.avatar}</div>
-        <div class="row-info">
-          <div class="row-name">
-            ${item.name}
-            ${item.isPlayer ? '<span class="row-tag">TÚ</span>' : ''}
-          </div>
-          ${item.streak >= 2 ? `<div class="row-streak">🔥 Racha x${item.streak}</div>` : ''}
-        </div>
-        <div class="row-score">${item.score.toLocaleString()} pts</div>
-      `;
-
-      listContainer.appendChild(row);
-    });
-
-    const isLastQuestion = this.currentIndex >= this.questions.length - 1;
-    document.getElementById('btn-continue-text').textContent = 
-      isLastQuestion ? 'VER GRAN PODIO FINAL' : 'SIGUIENTE PREGUNTA';
-  }
-
-  nextRoundOrFinish() {
+  advanceToNextOrFinish() {
     this.currentIndex++;
     if (this.currentIndex < this.questions.length) {
       this.startIntroCountdown();
     } else {
-      this.showFinalPodium();
+      this.showFinalIndividualSummary();
     }
   }
 
   /* ========================================================================
-     GRAN PODIO FINAL Y ESTADÍSTICAS
+     RESUMEN FINAL INDIVIDUAL Y CERTIFICADO
      ======================================================================== */
-  showFinalPodium() {
+  showFinalIndividualSummary() {
     this.switchScreen('podium');
 
-    const allPlayers = [
-      {
-        name: this.playerName,
-        avatar: this.playerAvatar,
-        score: this.score,
-        isPlayer: true
-      },
-      ...this.rivals.map(r => ({
-        name: r.name,
-        avatar: r.avatar,
-        score: r.score,
-        isPlayer: false
-      }))
-    ];
-
-    allPlayers.sort((a, b) => b.score - a.score);
-
-    // 1º, 2º y 3º lugar
-    const first = allPlayers[0];
-    const second = allPlayers[1];
-    const third = allPlayers[2];
-
-    document.getElementById('podium-avatar-1').textContent = first.avatar;
-    document.getElementById('podium-name-1').textContent = first.name;
-    document.getElementById('podium-score-1').textContent = `${first.score.toLocaleString()} pts`;
-
-    document.getElementById('podium-avatar-2').textContent = second.avatar;
-    document.getElementById('podium-name-2').textContent = second.name;
-    document.getElementById('podium-score-2').textContent = `${second.score.toLocaleString()} pts`;
-
-    document.getElementById('podium-avatar-3').textContent = third.avatar;
-    document.getElementById('podium-name-3').textContent = third.name;
-    document.getElementById('podium-score-3').textContent = `${third.score.toLocaleString()} pts`;
-
-    const playerRank = allPlayers.findIndex(p => p.isPlayer) + 1;
-    const standingEl = document.getElementById('podium-player-standing');
-    if (playerRank === 1) {
-      standingEl.textContent = '¡Felicidades! ¡Eres el Campeón Gastronómico indiscutible! 👑';
-    } else {
-      standingEl.textContent = `¡Gran partida! Has alcanzado el puesto #${playerRank} entre los competidores`;
-    }
-
-    // Estadísticas del jugador
     const accuracy = Math.round((this.correctCount / this.questions.length) * 100);
-    document.getElementById('final-stat-score').textContent = this.score.toLocaleString();
+    const avgTime = (this.totalTimeSpent / this.questions.length).toFixed(1);
+    const titleInfo = this.getGastronomicTitle(accuracy);
+
+    // Título de maestría
+    document.getElementById('final-mastery-icon').textContent = titleInfo.icon;
+    document.getElementById('final-mastery-title').textContent = titleInfo.title;
+    document.getElementById('final-mastery-desc').textContent = titleInfo.desc;
+
+    // Puntuación
+    document.getElementById('final-total-score').textContent = this.score.toLocaleString();
+
+    // Estadísticas
+    document.getElementById('final-stat-correct').textContent = `${this.correctCount} / ${this.questions.length}`;
     document.getElementById('final-stat-accuracy').textContent = `${accuracy}%`;
     document.getElementById('final-stat-streak').textContent = `🔥 ${this.maxStreak}`;
-    document.getElementById('final-stat-rank').textContent = `#${playerRank}`;
+    document.getElementById('final-stat-speed').textContent = `${avgTime}s`;
 
     // Efectos de celebración
     sounds.playPodiumFanfare();
-    confetti.startPodiumCelebration(7000);
+    confetti.startPodiumCelebration(5000);
 
-    // Guardar récord en localStorage
-    this.saveHighscore(accuracy, playerRank);
+    // Guardar en récords personales
+    this.savePersonalRecord(accuracy, titleInfo.title);
   }
 
-  saveHighscore(accuracy, rank) {
+  getGastronomicTitle(accuracy) {
+    if (accuracy >= 90) {
+      return {
+        title: 'Gran Maestro de la Cocina Hispana',
+        icon: '👨‍🍳👑',
+        desc: '¡Conocimiento gastronómico supremo! Conoces a profundidad las recetas, ingredientes y secretos culinarios de España e Hispanoamérica.'
+      };
+    }
+    if (accuracy >= 75) {
+      return {
+        title: 'Chef Especialista Hispano',
+        icon: '🥘🌟',
+        desc: '¡Excelente paladar! Tienes un dominio impresionante de los platillos más emblemáticos del mundo hispanohablante.'
+      };
+    }
+    if (accuracy >= 50) {
+      return {
+        title: 'Aficionado Gourmet',
+        icon: '🌮✨',
+        desc: '¡Buen desempeño! Identificas los clásicos más famosos, aunque aún quedan recetas y sabores tradicionales por explorar.'
+      };
+    }
+    return {
+      title: 'Aprendiz Culinario',
+      icon: '🥑🌱',
+      desc: '¡Un buen punto de partida! La gastronomía hispana es inmensa y llena de sorpresas. ¡Vuelve a intentarlo para subir de nivel!'
+    };
+  }
+
+  savePersonalRecord(accuracy, rankTitle) {
     try {
-      const records = JSON.parse(localStorage.getItem('sabores_highscores') || '[]');
+      const records = JSON.parse(localStorage.getItem('sabores_individual_records') || '[]');
       records.push({
-        name: this.playerName,
         avatar: this.playerAvatar,
         score: this.score,
         accuracy: `${accuracy}%`,
-        rank: `#${rank}`,
+        correct: `${this.correctCount}/${this.questions.length}`,
+        title: rankTitle,
         date: new Date().toLocaleDateString('es-ES')
       });
       records.sort((a, b) => b.score - a.score);
-      const top10 = records.slice(0, 10);
-      localStorage.setItem('sabores_highscores', JSON.stringify(top10));
+      const top10 = records.slice(0, 8);
+      localStorage.setItem('sabores_individual_records', JSON.stringify(top10));
     } catch (e) {}
   }
 
   renderHighscores() {
     const container = document.getElementById('highscores-table-container');
-    const records = JSON.parse(localStorage.getItem('sabores_highscores') || '[]');
+    const records = JSON.parse(localStorage.getItem('sabores_individual_records') || '[]');
 
     if (records.length === 0) {
-      container.innerHTML = '<p style="text-align:center; padding:16px; color:rgba(255,255,255,0.7);">Aún no tienes partidas registradas. ¡Sé el primero en jugar!</p>';
+      container.innerHTML = '<p style="text-align:center; padding:16px; color:rgba(255,255,255,0.7);">Aún no tienes partidas registradas. ¡Completa tu primer desafío gastronómico!</p>';
       return;
     }
 
     container.innerHTML = records.map((rec, i) => `
       <div class="record-row">
-        <span><strong>#${i + 1}</strong> ${rec.avatar} ${rec.name}</span>
+        <span><strong>#${i + 1}</strong> ${rec.avatar} ${rec.title}</span>
         <span><strong>${rec.score.toLocaleString()} pts</strong> (${rec.accuracy})</span>
         <span class="record-date">${rec.date}</span>
       </div>
@@ -694,12 +598,12 @@ class SaboresGame {
     const container = document.getElementById('review-list-container');
     container.innerHTML = this.userHistory.map((item, idx) => `
       <div class="review-item ${item.isCorrect ? 'was-correct' : 'was-wrong'}">
-        <div class="review-q-title">${idx + 1}. ${item.flag} ${item.question}</div>
+        <div class="review-q-title">${idx + 1}. ${item.flag} [${item.country}] ${item.question}</div>
         <div class="review-answer-line">
-          Tu respuesta: <strong>${item.userChoice}</strong> ${item.isCorrect ? '✅' : '❌'}
+          Tu respuesta: <strong>${item.userChoice}</strong> ${item.isCorrect ? '✅' : '❌'} (${item.timeSpent}s)
         </div>
         ${!item.isCorrect ? `<div class="review-answer-line" style="color:#10b981;">Respuesta correcta: <strong>${item.correctChoice}</strong></div>` : ''}
-        <div class="review-trivia">💡 <strong>Curiosidad:</strong> ${item.trivia}</div>
+        <div class="review-trivia">💡 <strong>Curiosidad gastronómica:</strong> ${item.trivia}</div>
       </div>
     `).join('');
 
@@ -708,16 +612,17 @@ class SaboresGame {
 
   shareScore() {
     const accuracy = Math.round((this.correctCount / this.questions.length) * 100);
-    const textToShare = `¡Acabo de obtener ${this.score.toLocaleString()} puntos en ¡Sabores Hispanos! 🌮🥘 Quiz con ${accuracy}% de precisión gastronómica. ¿Puedes superarme?`;
+    const titleInfo = this.getGastronomicTitle(accuracy);
+    const textToShare = `¡Alcancé el título "${titleInfo.title}" con ${this.score.toLocaleString()} puntos y ${accuracy}% de precisión en ¡Sabores Hispanos! 🌮🥘 ¿Qué tan bien conoces la gastronomía hispana?`;
 
     if (navigator.share) {
       navigator.share({
-        title: '¡Sabores Hispanos! Trivia',
+        title: '¡Sabores Hispanos! - Mi Resultado',
         text: textToShare,
         url: window.location.href
       }).catch(() => {});
     } else if (navigator.clipboard) {
-      navigator.clipboard.writeText(`${textToShare} Juega aquí: ${window.location.href}`).then(() => {
+      navigator.clipboard.writeText(`${textToShare} Compruébalo aquí: ${window.location.href}`).then(() => {
         this.showToast('¡Resultado copiado al portapapeles!');
       });
     } else {
@@ -740,7 +645,6 @@ class SaboresGame {
   }
 }
 
-// Iniciar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
   window.saboresGame = new SaboresGame();
 });

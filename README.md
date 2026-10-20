@@ -1,101 +1,74 @@
-# 🌮 ¡Sabores Hispanos! - El Gran Kahoot de Gastronomía y Cultura 🥘
+# 🌮 ¡Sabores Hispanos! - Trivia Culinaria Individual 🥘
 
-Un juego interactivo web de preguntas y respuestas en español, inspirado en el diseño vibrante y dinámico de **Kahoot**, centrado en **Comidas Típicas y Los Países Hispánicos**.
+Un juego interactivo web de preguntas y respuestas en español, inspirado en la estética vibrante de **Kahoot**, diseñado para una **experiencia 100% individual** enfocada en el aprendizaje y desafío cultural sobre **Comidas Típicas y Los Países Hispánicos**.
 
 ---
 
 ## ✨ Características Principales
 
-- 🎮 **Estilo Kahoot Auténtico**:
-  - Cuatro botones con formas y colores icónicos: 🔺 Rojo (Triángulo), 🔷 Azul (Rombo), 🟡 Amarillo (Círculo) y 🟩 Verde (Cuadrado).
-  - Cronómetro circular SVG en tiempo real con cuenta regresiva sonora y visual de alerta (de 20s, 15s o 30s).
-  - Cálculo de puntuación oficial de Kahoot basado en la rapidez de respuesta (hasta 1,000 puntos base) + bonos por racha 🔥.
-  - Oponentes virtuales en vivo (Sofía 🇪🇸, Mateo 🇦🇷, Valentina 🇨🇴, Lucas 🇲🇽, Camila 🇨🇱) que compiten contigo en la tabla de clasificación.
-  - Gran Podio 3D interactivo para el 1º, 2º y 3º puesto con lluvia de confeti y fanfarria triunfal.
-- 🌎 **Tema Gastronómico y Cultural**:
-  - 25 preguntas detalladas en español sobre platillos emblemáticos: Paella, Tacos al pastor, Asado, Ceviche, Bandeja paisa, Ropa vieja, Pastel de choclo, Chivito, Mangú, Pupusas, Mole poblano, Curanto y más.
-  - Sección *"¿Sabías que...?"* al final de cada pregunta con explicaciones y curiosidades históricas del plato.
-  - Módulo de **Revisión de Respuestas** al terminar la partida para estudiar los aciertos y fallos.
-- 🔊 **Efectos de Sonido con Web Audio API**:
-  - 100% sintetizados procedimentalmente mediante el navegador (sin archivos MP3 externos ni problemas de CORS).
-  - Música de fondo en el lobby, tics de tensión para el temporizador, fanfarrias de acierto, efectos de error y fanfarria olímpica en el podio.
-  - Botón flotante para silenciar/activar sonido y modo pantalla completa.
-- 📱 **Diseño 100% Responsivo**:
-  - Diseñado para funcionar impecablemente en computadoras, tablets y teléfonos celulares.
-  - Atajos de teclado: Puedes presionar las teclas `1`, `2`, `3` o `4` para contestar inmediatamente.
+- 🎯 **Experiencia 100% Individual**:
+  - Sin bots, sin clasificaciones fingidas ni marcadores artificiales. Es un desafío personal para poner a prueba tu conocimiento de la gastronomía hispanohablante.
+  - Al completar la partida recibes un **Certificado de Maestría Gastronómica** con tu puntuación, precisión, racha y un título honorífico (ej. *Gran Maestro de la Cocina Hispana*, *Chef Especialista Hispano*, etc.).
+- 🎮 **Estilo Visual Kahoot**:
+  - Cuatro botones dinámicos con los colores y formas canónicas: 🔺 Rojo (Triángulo), 🔷 Azul (Rombo), 🟡 Amarillo (Círculo) y 🟩 Verde (Cuadrado).
+  - Cronómetro circular SVG animado con cuenta regresiva sonora y alerta de tensión en los últimos segundos.
+  - Sistema de puntuación por velocidad (hasta 1,000 puntos base) + bonos por racha de respuestas seguidas 🔥.
+- 🌎 **Tema: Comidas Típicas y Países Hispánicos**:
+  - 25 preguntas culturales sobre platos tradicionales de España, México, Argentina, Perú, Colombia, Venezuela, Chile, Cuba, Uruguay, República Dominicana, Guatemala, El Salvador, Costa Rica, Ecuador y Bolivia.
+  - Al responder cada pregunta, descubres una tarjeta didáctica **"¿Sabías que...?"** con la historia, ingredientes y curiosidades del platillo.
+  - Al final de la partida, puedes abrir el **Resumen Culinario Completo** para repasar todas las preguntas, tus respuestas y las curiosidades aprendidas.
+- 🔊 **Audio Procedural con Web Audio API**:
+  - Efectos de sonido y melodías sintetizadas en el navegador (sin archivos externos, carga instantánea y sin problemas de CORS).
+  - Control de sonido (Mute/Unmute) y botón de pantalla completa.
+  - Atajos de teclado: responde al instante usando las teclas `1`, `2`, `3` o `4`.
+- 📱 **Totalmente Responsivo**:
+  - Adaptado para teléfonos inteligentes, tablets y computadoras de escritorio.
 
 ---
 
-## 🚀 Cómo Publicar en GitHub Pages (Deploy en 1 Minuto)
+## 🚀 Publicación en GitHub Pages (Deploy en 1 Minuto)
 
-Este proyecto está **100% preparado** para funcionar directamente en GitHub Pages sin necesidad de instalar librerías complejas ni procesos de compilación (builds).
+El proyecto incluye la configuración para GitHub Pages (`.nojekyll` y `.github/workflows/deploy.yml`):
 
 ### Paso 1: Crear el repositorio en GitHub
-1. Entra a tu cuenta en [GitHub](https://github.com/new) y crea un nuevo repositorio (por ejemplo, `sabores-hispanos` o `jogo-espanhol`).
-2. Déjalo como **Público** (Public).
+1. Ingresa a [github.com/new](https://github.com/new) y crea un nuevo repositorio público (ej. `sabores-hispanos`).
 
-### Paso 2: Subir el proyecto desde tu terminal
-Abre una terminal en la carpeta de este proyecto y ejecuta:
-
+### Paso 2: Conectar y subir tu código
+En tu terminal, dentro de esta carpeta, ejecuta:
 ```bash
 git remote add origin https://github.com/TU-USUARIO/NOMBRE-DEL-REPOSITORIO.git
 git push -u origin main
 ```
+*(Reemplaza `TU-USUARIO` y `NOMBRE-DEL-REPOSITORIO` por los tuyos).*
 
-*(Sustituye `TU-USUARIO` y `NOMBRE-DEL-REPOSITORIO` por los tuyos).*
-
----
-
-### Paso 3: Activar GitHub Pages en el repositorio
-
-Tienes dos opciones listas:
-
-#### Opción A (Recomendada con GitHub Actions - Totalmente Automatizada):
-1. En tu repositorio de GitHub, ve a la pestaña **Settings** (Configuración) ➔ sección **Pages** (en el menú lateral izquierdo).
-2. En **Build and deployment** ➔ **Source**, selecciona:
-   **`GitHub Actions`**.
-3. ¡Listo! El archivo incluido `.github/workflows/deploy.yml` compilará y publicará el juego automáticamente. En unos segundos tu juego estará activo en:
+### Paso 3: Activar GitHub Pages
+1. En GitHub, entra en tu repositorio ➔ **Settings** ➔ sección **Pages** (menú izquierdo).
+2. En **Build and deployment** ➔ **Source**, elige:
+   - **`GitHub Actions`** *(recomendado, usará el workflow listo incluido)* **O**
+   - **`Deploy from a branch`** (rama `main`, carpeta `/ (root)`).
+3. ¡Listo! En instantes tendrás tu enlace en vivo:
    ```
    https://TU-USUARIO.github.io/NOMBRE-DEL-REPOSITORIO/
    ```
 
-#### Opción B (Clásica por rama):
-1. En **Settings** ➔ **Pages** ➔ **Build and deployment** ➔ **Source**, selecciona:
-   **`Deploy from a branch`**.
-2. En **Branch**, selecciona **`main`** y la carpeta **`/ (root)`**, luego haz clic en **Save**.
-3. En 1 minuto tendrás tu enlace listo.
-
 ---
 
-## 💻 Cómo probar el juego localmente
-
-Para probar el juego de inmediato en tu computadora:
-
-1. Simplemente haz doble clic sobre el archivo `index.html` en tu explorador de archivos para abrirlo en Chrome, Edge o tu navegador preferido.
-2. O bien, si tienes Python instalado, ejecuta en la terminal:
-   ```bash
-   python -m http.server 8000
-   ```
-   Y abre en tu navegador: `http://localhost:8000`.
-
----
-
-## 📂 Estructura del Proyecto
+## 📂 Estructura Limpia del Proyecto
 
 ```text
-├── index.html                   # Página principal y estructura semántica de pantallas
+├── index.html                   # Interfaz de pantallas (Lobby, Intro, Pregunta, Resultado, Resumen)
 ├── .nojekyll                    # Configuración para GitHub Pages
 ├── .gitignore                   # Archivos ignorados por Git
 ├── css/
-│   └── style.css                # Estilos visuales Kahoot, degradados, animaciones y podio 3D
+│   └── style.css                # Estilos Kahoot, degradados, animaciones y diseño responsivo
 ├── js/
-│   ├── audio.js                 # Motor de sonido sintetizado Web Audio API
-│   ├── confetti.js              # Animaciones de partículas y confeti para celebraciones
-│   ├── questions.js             # Banco de 25 preguntas culturales con opciones y curiosidades
-│   └── game.js                  # Lógica del juego, rivales en vivo, cronómetro y cálculo de puntos
+│   ├── audio.js                 # Sintetizador procedural Web Audio API
+│   ├── confetti.js              # Animaciones de confeti a 60fps en Canvas
+│   ├── questions.js             # 25 preguntas culturales, opciones y curiosidades
+│   └── game.js                  # Motor del juego individual, temporizador SVG y títulos de maestría
 └── .github/
     └── workflows/
         └── deploy.yml           # Workflow automático para GitHub Pages Actions
 ```
 
-¡Que empiece el juego y que gane el mejor gourmet! 🌮🏆
+¡Disfruta del juego y descubre los mejores sabores del mundo hispano! 🌮🥘🏆
