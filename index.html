@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>¡Sabores Hispanos! | Trivia de Comidas Típicas y Países Hispánicos</title>
+  <title>¡Personalidades Hispanas! | Trivia de Figuras Históricas y Culturales</title>
   
   <!-- SEO & Social Meta Tags -->
-  <meta name="description" content="Juego interactivo de preguntas y respuestas en español sobre comidas típicas y los países hispánicos. Pon a prueba tus conocimientos culturales.">
+  <meta name="description" content="Juego interactivo de preguntas y respuestas en español sobre grandes personalidades y los países hispánicos. Pon a prueba tus conocimientos culturales.">
   <meta name="theme-color" content="#46178f">
   
   <!-- Google Fonts: Fredoka & Outfit para diseño dinámico tipo Kahoot -->
@@ -28,7 +28,7 @@
       <span class="brand-shape shape-diamond"></span>
       <span class="brand-shape shape-circle"></span>
       <span class="brand-shape shape-square"></span>
-      <span class="brand-text">¡SABORES HISPANOS!</span>
+      <span class="brand-text">¡PERSONALIDADES HISPANAS!</span>
     </div>
     <div class="header-controls">
       <button id="btn-sound-toggle" class="control-btn" title="Alternar Sonido" aria-label="Alternar Sonido">
@@ -48,27 +48,27 @@
     <section id="screen-lobby" class="game-screen active">
       <div class="lobby-card glass-panel">
         
-        <div class="hero-badge">🌮 🥘 🥟 🇨🇱 🇲🇽 🇪🇸 🇦🇷 🇨🇴 🇵🇪</div>
+        <div class="hero-badge">🎨 📚 🎭 🇨🇱 🇲🇽 🇪🇸 🇦🇷 🇨🇴 🇵🇪</div>
         
         <h1 class="game-title">
-          <span class="title-top">¡SABORES</span>
-          <span class="title-bottom">HISPANOS!</span>
+          <span class="title-top">¡PERSONALIDADES</span>
+          <span class="title-bottom">HISPANAS!</span>
         </h1>
-        <p class="game-subtitle">Trivia individual sobre comidas típicas y los países hispanohablantes</p>
+        <p class="game-subtitle">Trivia individual sobre grandes personalidades y los países hispanohablantes</p>
 
         <!-- Configuración de la partida individual -->
         <div class="setup-section">
           
-          <label class="section-label">Elige tu Emblema Culinario:</label>
+          <label class="section-label">Elige tu Emblema Cultural:</label>
           <div class="avatar-selector" id="avatar-selector" role="radiogroup">
-            <button type="button" class="avatar-opt selected" data-avatar="🌮" aria-label="Taco">🌮</button>
-            <button type="button" class="avatar-opt" data-avatar="🥘" aria-label="Paella">🥘</button>
-            <button type="button" class="avatar-opt" data-avatar="🥟" aria-label="Empanada">🥟</button>
-            <button type="button" class="avatar-opt" data-avatar="🫔" aria-label="Tamal">🫔</button>
-            <button type="button" class="avatar-opt" data-avatar="🥑" aria-label="Aguacate">🥑</button>
-            <button type="button" class="avatar-opt" data-avatar="🧉" aria-label="Mate">🧉</button>
-            <button type="button" class="avatar-opt" data-avatar="🌶️" aria-label="Chile">🌶️</button>
-            <button type="button" class="avatar-opt" data-avatar="🍮" aria-label="Flan">🍮</button>
+            <button type="button" class="avatar-opt selected" data-avatar="🎨" aria-label="Arte">🎨</button>
+            <button type="button" class="avatar-opt" data-avatar="📚" aria-label="Literatura">📚</button>
+            <button type="button" class="avatar-opt" data-avatar="🎭" aria-label="Teatro">🎭</button>
+            <button type="button" class="avatar-opt" data-avatar="🔬" aria-label="Ciencia">🔬</button>
+            <button type="button" class="avatar-opt" data-avatar="🎸" aria-label="Música">🎸</button>
+            <button type="button" class="avatar-opt" data-avatar="🏅" aria-label="Deporte">🏅</button>
+            <button type="button" class="avatar-opt" data-avatar="✒️" aria-label="Poesía">✒️</button>
+            <button type="button" class="avatar-opt" data-avatar="🏛️" aria-label="Historia">🏛️</button>
           </div>
 
           <div class="game-options-grid">
@@ -172,7 +172,7 @@
 
           <!-- Tarjeta de la Pregunta -->
           <div class="question-card glass-panel">
-            <div class="dish-badge" id="question-dish-badge">🥘 Comida Tradicional</div>
+            <div class="dish-badge" id="question-dish-badge">🎭 Personalidad Histórica</div>
             <h2 class="question-title" id="question-title-text">
               Cargando pregunta...
             </h2>
@@ -237,10 +237,10 @@
         <div class="trivia-explanation-box">
           <div class="trivia-header">
             <span class="trivia-icon">💡</span>
-            <span class="trivia-label">CURIOSIDAD CULTURAL & GASTRONÓMICA</span>
+            <span class="trivia-label">CURIOSIDAD HISTÓRICA Y CULTURAL</span>
           </div>
           <p class="trivia-text" id="result-explanation-text">
-            Explicación cultural del plato hispánico...
+            Explicación cultural de la personalidad hispánica...
           </p>
         </div>
 
@@ -259,10 +259,10 @@
     <section id="screen-podium" class="game-screen">
       <div class="final-summary-card glass-panel">
         
-        <div class="summary-hero-icon" id="final-mastery-icon">👨‍🍳👑</div>
+        <div class="summary-hero-icon" id="final-mastery-icon">🏛️👑</div>
         <h1 class="summary-main-title">¡DESAFÍO COMPLETADO!</h1>
-        <div class="mastery-title-pill" id="final-mastery-title">Gran Maestro de la Cocina Hispana</div>
-        <p class="summary-desc" id="final-mastery-desc">¡Conocimiento gastronómico supremo sobre el mundo hispano!</p>
+        <div class="mastery-title-pill" id="final-mastery-title">Gran Maestro de la Cultura Hispana</div>
+        <p class="summary-desc" id="final-mastery-desc">¡Conocimiento cultural supremo sobre el mundo hispano!</p>
 
         <!-- Gran Marcador de Puntos Individual -->
         <div class="big-score-display">
@@ -325,7 +325,7 @@
         <div class="how-step">
           <div class="step-num">1</div>
           <div class="step-text">
-            <strong>Preguntas Culinarias:</strong> Cada pregunta tiene 4 opciones representadas con los colores y formas clásicas de Kahoot (Rojo 🔺, Azul 🔷, Amarillo 🟡, Verde 🟩).
+            <strong>Preguntas Culturales:</strong> Cada pregunta tiene 4 opciones representadas con los colores y formas clásicas de Kahoot (Rojo 🔺, Azul 🔷, Amarillo 🟡, Verde 🟩).
           </div>
         </div>
         <div class="how-step">
@@ -377,7 +377,7 @@
   <dialog id="modal-review" class="custom-dialog wide-dialog">
     <div class="dialog-content glass-panel">
       <div class="dialog-header">
-        <h2>📜 Resumen Culinario Completo</h2>
+        <h2>📜 Resumen Cultural Completo</h2>
         <button class="dialog-close" data-close-modal="modal-review" aria-label="Cerrar modal">&times;</button>
       </div>
       <div class="dialog-body" id="review-list-container">

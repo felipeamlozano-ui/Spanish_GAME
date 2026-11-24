@@ -1,17 +1,17 @@
 /**
- * ¡SABORES HISPANOS! - MOTOR PRINCIPAL DEL JUEGO (MODO 100% INDIVIDUAL)
- * Experiencia solista de trivia gastronómica:
- * - Preguntas culturales sobre comidas típicas y países hispanohablantes.
+ * ¡PERSONALIDADES HISPANAS! - MOTOR PRINCIPAL DEL JUEGO (MODO 100% INDIVIDUAL)
+ * Experiencia solista de trivia cultural e histórica:
+ * - Preguntas culturales sobre grandes personalidades y países hispanohablantes.
  * - Cronómetro SVG y puntos basados en velocidad + racha personal.
  * - Sin bots ni marcadores artificiales: desafío 100% enfocado en el jugador.
  * - Curiosidades históricas ("¿Sabías que...?") en cada respuesta.
- * - Título honorífico y certificado final de maestría culinaria.
+ * - Título honorífico y certificado final de maestría cultural.
  */
 
-class SaboresGame {
+class PersonalidadesGame {
   constructor() {
     // Configuración individual
-    this.playerAvatar = '🌮';
+    this.playerAvatar = '🎨';
     this.questionCount = 15;
     this.timeLimit = 20;
 
@@ -194,7 +194,7 @@ class SaboresGame {
 
     document.getElementById('btn-clear-highscores').addEventListener('click', () => {
       sounds.playPop();
-      localStorage.removeItem('sabores_individual_records');
+      localStorage.removeItem('personalidades_individual_records');
       this.renderHighscores();
       this.showToast('Historial personal borrado');
     });
@@ -287,7 +287,7 @@ class SaboresGame {
     this.hudScore.textContent = `${this.score.toLocaleString()} pts`;
 
     // Pregunta y opciones
-    document.getElementById('question-dish-badge').textContent = `${currentQ.flag} ${currentQ.dish}`;
+    document.getElementById('question-dish-badge').textContent = `${currentQ.flag} ${currentQ.category}`;
     document.getElementById('question-title-text').textContent = currentQ.question;
 
     this.answerButtons.forEach((btn, index) => {
@@ -506,7 +506,7 @@ class SaboresGame {
 
     const accuracy = Math.round((this.correctCount / this.questions.length) * 100);
     const avgTime = (this.totalTimeSpent / this.questions.length).toFixed(1);
-    const titleInfo = this.getGastronomicTitle(accuracy);
+    const titleInfo = this.getCulturalTitle(accuracy);
 
     // Título de maestría
     document.getElementById('final-mastery-icon').textContent = titleInfo.icon;
@@ -530,38 +530,38 @@ class SaboresGame {
     this.savePersonalRecord(accuracy, titleInfo.title);
   }
 
-  getGastronomicTitle(accuracy) {
+  getCulturalTitle(accuracy) {
     if (accuracy >= 90) {
       return {
-        title: 'Gran Maestro de la Cocina Hispana',
-        icon: '👨‍🍳👑',
-        desc: '¡Conocimiento gastronómico supremo! Conoces a profundidad las recetas, ingredientes y secretos culinarios de España e Hispanoamérica.'
+        title: 'Gran Maestro de la Cultura Hispana',
+        icon: '🏛️👑',
+        desc: '¡Conocimiento cultural supremo! Conoces a profundidad la vida, obra y legado de las grandes personalidades de España e Hispanoamérica.'
       };
     }
     if (accuracy >= 75) {
       return {
-        title: 'Chef Especialista Hispano',
-        icon: '🥘🌟',
-        desc: '¡Excelente paladar! Tienes un dominio impresionante de los platillos más emblemáticos del mundo hispanohablante.'
+        title: 'Erudito del Mundo Hispano',
+        icon: '📚🌟',
+        desc: '¡Excelente desempeño! Tienes un dominio impresionante de los escritores, artistas, científicos y líderes más emblemáticos del mundo hispanohablante.'
       };
     }
     if (accuracy >= 50) {
       return {
-        title: 'Aficionado Gourmet',
-        icon: '🌮✨',
-        desc: '¡Buen desempeño! Identificas los clásicos más famosos, aunque aún quedan recetas y sabores tradicionales por explorar.'
+        title: 'Explorador Cultural',
+        icon: '🎭✨',
+        desc: '¡Buen desempeño! Reconoces a las figuras más famosas, aunque aún quedan grandes historias y personalidades por descubrir.'
       };
     }
     return {
-      title: 'Aprendiz Culinario',
-      icon: '🥑🌱',
-      desc: '¡Un buen punto de partida! La gastronomía hispana es inmensa y llena de sorpresas. ¡Vuelve a intentarlo para subir de nivel!'
+      title: 'Aprendiz de Historia',
+      icon: '🌱📖',
+      desc: '¡Un buen punto de partida! La historia y cultura hispana están llenas de figuras fascinantes. ¡Vuelve a intentarlo para subir de nivel!'
     };
   }
 
   savePersonalRecord(accuracy, rankTitle) {
     try {
-      const records = JSON.parse(localStorage.getItem('sabores_individual_records') || '[]');
+      const records = JSON.parse(localStorage.getItem('personalidades_individual_records') || '[]');
       records.push({
         avatar: this.playerAvatar,
         score: this.score,
@@ -572,16 +572,16 @@ class SaboresGame {
       });
       records.sort((a, b) => b.score - a.score);
       const top10 = records.slice(0, 8);
-      localStorage.setItem('sabores_individual_records', JSON.stringify(top10));
+      localStorage.setItem('personalidades_individual_records', JSON.stringify(top10));
     } catch (e) {}
   }
 
   renderHighscores() {
     const container = document.getElementById('highscores-table-container');
-    const records = JSON.parse(localStorage.getItem('sabores_individual_records') || '[]');
+    const records = JSON.parse(localStorage.getItem('personalidades_individual_records') || '[]');
 
     if (records.length === 0) {
-      container.innerHTML = '<p style="text-align:center; padding:16px; color:rgba(255,255,255,0.7);">Aún no tienes partidas registradas. ¡Completa tu primer desafío gastronómico!</p>';
+      container.innerHTML = '<p style="text-align:center; padding:16px; color:rgba(255,255,255,0.7);">Aún no tienes partidas registradas. ¡Completa tu primer desafío cultural!</p>';
       return;
     }
 
@@ -603,7 +603,7 @@ class SaboresGame {
           Tu respuesta: <strong>${item.userChoice}</strong> ${item.isCorrect ? '✅' : '❌'} (${item.timeSpent}s)
         </div>
         ${!item.isCorrect ? `<div class="review-answer-line" style="color:#10b981;">Respuesta correcta: <strong>${item.correctChoice}</strong></div>` : ''}
-        <div class="review-trivia">💡 <strong>Curiosidad gastronómica:</strong> ${item.trivia}</div>
+        <div class="review-trivia">💡 <strong>Curiosidad cultural:</strong> ${item.trivia}</div>
       </div>
     `).join('');
 
@@ -612,12 +612,12 @@ class SaboresGame {
 
   shareScore() {
     const accuracy = Math.round((this.correctCount / this.questions.length) * 100);
-    const titleInfo = this.getGastronomicTitle(accuracy);
-    const textToShare = `¡Alcancé el título "${titleInfo.title}" con ${this.score.toLocaleString()} puntos y ${accuracy}% de precisión en ¡Sabores Hispanos! 🌮🥘 ¿Qué tan bien conoces la gastronomía hispana?`;
+    const titleInfo = this.getCulturalTitle(accuracy);
+    const textToShare = `¡Alcancé el título "${titleInfo.title}" con ${this.score.toLocaleString()} puntos y ${accuracy}% de precisión en ¡Personalidades Hispanas! 🎨📚 ¿Qué tan bien conoces a las grandes figuras del mundo hispano?`;
 
     if (navigator.share) {
       navigator.share({
-        title: '¡Sabores Hispanos! - Mi Resultado',
+        title: '¡Personalidades Hispanas! - Mi Resultado',
         text: textToShare,
         url: window.location.href
       }).catch(() => {});
@@ -646,5 +646,5 @@ class SaboresGame {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  window.saboresGame = new SaboresGame();
+  window.personalidadesGame = new PersonalidadesGame();
 });
